@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<%@include file = "assets/html/head.jsp" %>
+</head>
+<body>
+<%@include file = "assets/html/header.jsp" %>
+<%@include file = "assets/html/header2.jsp" %>
+<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item</th>
+      <th scope="col">Valor</th>
+
+    </tr>
+   
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Nombre</td>
+      <td>${persona.nombre}</td>
+
+    </tr>
+    
+    <tr>
+      <th scope="row">2</th>
+      <td>Apellido</td>
+      <td>${persona.apellido}</td>
+
+    </tr>
+    
+    <tr>
+      <th scope="row">3</th>
+      <td>Email</td>
+      <td>${persona.email}</td>
+
+    </tr>
+
+    <tr>
+      <th scope="row">4</th>
+      <td>Medio de Pago</td>
+      <td>${reserva.medioPago}</td>
+
+    </tr>
+    
+        <tr>
+      <th scope="row">5</th>
+      <td>Habitacion</td>
+      <td>${nombreHabitacion}</td>
+
+    </tr>
+    
+            <tr>
+      <th scope="row">6</th>
+      <td>Días</td>
+      <td>${reserva.diasStr}</td>
+
+    </tr>
+    
+                <tr>
+      <th scope="row">7</th>
+      <td>Valor a Pagar</td>
+      <td><b>CLP$ ${valor}</b></td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+
+
+<%@include file = "assets/html/footer.jsp" %>
+</body>
+</html>

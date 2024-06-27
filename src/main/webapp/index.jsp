@@ -1,56 +1,166 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="cl.desafiolatam.model.Habitacion"%>
+<%@page import="cl.desafiolatam.business.HabitacionBusiness"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+HabitacionBusiness habitacionesServicio = new HabitacionBusiness();
+List<Habitacion> listaHabitaciones = habitacionesServicio.obtenerHabitaciones();
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Shop Homepage - Start Bootstrap Template</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-<!-- Bootstrap icons-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
+<%@include file= "assets/html/head.jsp" %>
 </head>
 <body>
 	<%@include file="assets/html/header.jsp"%>
-	<%@include file="assets/html/head.jsp"%>
+	<%@include file="assets/html/header2.jsp"%>
 	<div class="titulo Cartas">
 
-		<h2>Habitaciones Disponibles</h2>
-		// Colocar cantidad de habitaciones disponibles.
-		<div class="container">
+		<h2>Habitaciones Disponibles (<%=listaHabitaciones.size() %>)</h2>
+		
+		<div class="linea">
 			<hr>
 		</div>
 	</div>
 
+	<form action="RecepcionFormulario" method="post">
 
-	<section class="Cartas">
-		<div class="card" style="width: 18rem;">
-			<img class="card-img-top" src="..." alt="Card image cap">
-			<div class="card-body">
-				<h5 class="card-title">Card title</h5>
-				<p class="card-text">Some quick example text to build on the
-					card title and make up the bulk of the card's content.</p>
-				<a href="#" class="btn btn-primary">Go somewhere</a>
+		<div
+			class="cartasForm row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-between">
+
+			<%
+			for (int i = 0; i < listaHabitaciones.size(); i++) {
+			%>
+			<div class="col mb-3">
+				<div class="card" style="width: 18rem">
+					<div class="imagenCard ratio ratio-4x3">
+						<img class="card-img-top"
+							src="<%=listaHabitaciones.get(i).getImagen()%>"
+							alt="Card image cap">
+					</div>
+
+					<div class="card-body">
+						<h5 class="card-title text-center"><%=listaHabitaciones.get(i).getNombre()%></h5>
+						<p class="card-text text-center"><%=listaHabitaciones.get(i).getDescripcion()%></p>
+						<p class="card-text text-center">
+							CLP $<%=listaHabitaciones.get(i).getPrecio()%></p>
+						<div class="text-center">
+							<input type="radio" id="html" name="idevento" value="<%= listaHabitaciones.get(i).getId() %>" checked>
+						</div>
+
+					</div>
+				</div>
 			</div>
+			<%
+			}
+			%>
+
 		</div>
-	</section>
+		<div class="tituloFormTxt">
+			<hr>
+			<h2>Información de Reserva Habitación</h2>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<label for="validacionNombre" class="form-label">Nombre</label> <input
+					type="text" class="form-control" id="txtNombre" name="txtNombre"
+					value="" placeHolder="nombre" required>
+				<div class="valid-feedback"></div>
+			</div>
+
+			<div class="col-md-6">
+				<label for="validacionApellido" class="form-label">Apellido</label>
+				<input type="text" class="form-control" id="txtApellido"
+					name="txtApellido" value="" placeHolder="Apellido" required>
+				<div class="valid-feedback"></div>
+			</div>
+
+			<div class="col-md-6">
+				<label for="validacionCorreo" class="form-label">Email</label> <input
+					type="text" class="form-control" id="txtCorreo" name="txtCorreo"
+					value="" placeHolder="nombre@mail.com" required>
+				<div class="valid-feedback"></div>
+			</div>
+
+			<div class="col-md-2">
+				<label for="validationCustom04" class="form-label">medioDePago</label>
+				<select class="form-select" id="validationCustom04"
+					name="txtMedioDePago" required>
+					<option value="contado">Contado</option>
+					<option value="Transferencia Bancaria">Transferencia
+						Bancaria</option>
+					<option value="RedCompra">RedCompra</option>
+
+				</select>
+				<div class="invalid-feedback">Please select a valid state.</div>
+			</div>
+
+			<div class="col-md-2">
+				<label for="validationCustom04" class="form-label">Días</label> <select
+					class="form-select" id="txtDias" name="txtDias" required>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+				<div class="invalid-feedback">Please select a valid state.</div>
+			</div>
+			<div class="col-md-2">
+				<label for="datepicker" class="form-label">Fecha</label> <input
+					type="text" class="form-control" id="datepicker" name="txtFecha"
+					required>
+				<div class="valid-feedback">Looks good!</div>
+				<div class="invalid-feedback">Please select a valid date.</div>
+			</div>
+			<div class = "botonEnviar ms-0 py-3">
+				<button type="submit" class="btn btn-primary">Enviar Solicitud de Compra</button>
+			</div>
+			
+
+		</div>
 
 
+
+	</form>
 
 
 	<%@include file="assets/html/footer.jsp"%>
+	
+	
+		<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap Datepicker JS -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<!-- Bootstrap datepicker js locales js -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			var today = new Date();
+			$('#datepicker').datepicker({
+				format : 'dd/mm/yyyy',
+				autoclose : true,
+				todayHighlight : true,
+				language : 'es',
+				startDate : today
+			});
+		});
+	</script>
 </body>
 </html>
