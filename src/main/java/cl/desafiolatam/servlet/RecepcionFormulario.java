@@ -43,25 +43,12 @@ public class RecepcionFormulario extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HabitacionBusiness habitacionServicio = new HabitacionBusiness();
-		List<Habitacion> habitaciones = habitacionServicio.obtenerHabitaciones();
-		String idTest = request.getParameter("idevento");
-		String idRecibida = request.getParameter("idevento");
-		int idHabitacion = Integer.parseInt(idRecibida); 
-		Habitacion habitacionEncontrada = habitacionServicio.getHabitacionPorId(idHabitacion);
+		Habitacion habitacionEncontrada = habitacionServicio.getHabitacionPorId(Integer.parseInt(request.getParameter("idevento")));
+
+		int valorPagar =  habitacionServicio.valorTotalHabitacion(habitacionEncontrada.getPrecio(), Integer.parseInt(request.getParameter("txtDias")));
 		
-		String nombre = request.getParameter("txtNombre");
-		String apellido = request.getParameter("txtApellido");
-		String email = request.getParameter("txtCorreo");
-		String medioPago = request.getParameter("txtMedioDePago");;
-		String diasStr = request.getParameter("txtDias");
-		String fechaEntrada = request.getParameter("txtFecha");
-		int dias = Integer.parseInt(diasStr);
-		int valorPagar =  habitacionServicio.valorTotalHabitacion(habitacionEncontrada.getPrecio(), dias);
-		
-		Persona persona = new Persona(nombre, apellido, email);
-		Reserva reserva = new Reserva(medioPago, diasStr, fechaEntrada);
-		
-		System.out.println(idTest);
+		Persona persona = new Persona(request.getParameter("txtNombre"), request.getParameter("txtApellido"), request.getParameter("txtCorreo"));
+		Reserva reserva = new Reserva(request.getParameter("txtMedioDePago"), request.getParameter("txtDias"), request.getParameter("txtFecha"));
 		
 		request.setAttribute("persona", persona);
 		request.setAttribute("reserva", reserva);
